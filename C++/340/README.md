@@ -1,1 +1,1 @@
-CSCI 340 - Algorithm
+CSCI 340 - 
