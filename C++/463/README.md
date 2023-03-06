@@ -1,1 +1,1 @@
-CSCI 463 - 
+CSCI 463 - Computer Architecture and System Organization
