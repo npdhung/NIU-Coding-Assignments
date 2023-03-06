@@ -1,1 +1,1 @@
-CSCI 470 - Java
+CSCI 470 - Programming in Java
