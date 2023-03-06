@@ -1,1 +1,1 @@
-CSCI 465 - 
+CSCI 465 - Enterprise Application Environments
