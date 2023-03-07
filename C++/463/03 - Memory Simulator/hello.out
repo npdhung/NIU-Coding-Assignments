@@ -1,0 +1,39 @@
+00000000: a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5 *................*
+00000010: a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5 *................*
+00000020: a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5 *................*
+00000000: 68 65 6c 6c 6f 20 77 6f  72 6c 64 20 31 20 32 20 *hello world 1 2 *
+00000010: 33 20 34 0a a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5 *3 4.............*
+00000020: a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5 *................*
+48
+00000068
+00006568
+6c6c6568
+0x00000068
+0x00006568
+0x6c6c6568
+68
+68
+68
+WARNING: Address out of range: 0x00001000
+WARNING: Address out of range: 0x00001001
+WARNING: Address out of range: 0x00001002
+WARNING: Address out of range: 0x00001003
+0x00000000
+0x00000020
+WARNING: Address out of range: 0x0000007f
+0x00000000
+WARNING: Address out of range: 0x00000080
+0x00000000
+WARNING: Address out of range: 0x000000e3
+0x00000000
+WARNING: Address out of range: 0x000000e0
+WARNING: Address out of range: 0x000000e1
+0x00000000
+WARNING: Address out of range: 0x000000e0
+WARNING: Address out of range: 0x000000e1
+WARNING: Address out of range: 0x000000e2
+WARNING: Address out of range: 0x000000e3
+0x00000000
+00000000: 68 65 6c 6c 6f 20 77 6f  72 6c 64 20 31 20 32 20 *hello world 1 2 *
+00000010: 12 20 34 0a 34 12 a5 a5  21 43 65 87 a5 a5 a5 a5 *. 4.4...!Ce.....*
+00000020: a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5 *................*
