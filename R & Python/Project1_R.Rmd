@@ -1,0 +1,143 @@
+---
+title: "Project1 (R)"
+author: "Hung Nguyen"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+#1a. Write the simCorn function in R
+
+```{r}
+simCorn <- function(overalEffect=0,fertilizerEffect=c(0,0,0),
+                   rowEffect=c(0,0,0),colEffect=c(0,0,0),
+                   seed=NULL,dist=rnorm,...)
+{
+  # Error checking
+  if (length(overalEffect) != 1) 
+    stop("Invalid length of overalEffect. Need to be 1. Exit.")
+  
+  if (length(fertilizerEffect) != 3) 
+    stop("Invalid length of fertilizerEffect. Need to be 3. Exit.")
+  
+  if (length(rowEffect) != 3) 
+    stop("Invalid length of rowEffect. Need to be 3. Exit.")
+
+  if (length(colEffect) != 3) 
+    stop("Invalid length of colEffect. Need to be 3. Exit.")
+  
+  # set the seed if seed parameter is provided
+  if (!is.null(seed)) set.seed(seed)
+  
+  Fertilizer <- c("A","B","C","C","A","B","B","C","A")
+  Row <- c(1,1,1,2,2,2,3,3,3)
+  Column <- c(1,2,3,1,2,3,1,2,3)
+  
+  X <- matrix(c(1,1,1,1,1,1,1,1,1,
+              1,0,0,0,1,0,0,0,1,
+              0,1,0,0,0,1,1,0,0,
+              0,0,1,1,0,0,0,1,0,
+              1,1,1,0,0,0,0,0,0,
+              0,0,0,1,1,1,0,0,0,
+              0,0,0,0,0,0,1,1,1,
+              1,0,0,1,0,0,1,0,0,
+              0,1,0,0,1,0,0,1,0,
+              0,0,1,0,0,1,0,0,1),9,10)
+  
+  error_vector <- matrix(dist(9,...),9,1)
+  
+  theta <- matrix(c(overalEffect,fertilizerEffect,rowEffect,colEffect),10,1)
+  
+  Y <- X %*% theta + error_vector
+  
+  x <- data.frame(Fertilizer=Fertilizer,Row=Row,Column=Column,Yield=Y)
+  x
+}
+
+```
+
+```{r error=T}
+# Error testing
+# 1
+y <- simCorn(10,c(0,0,0,1),c(0,0,0),c(0,0,0),42544,rnorm,mean=0,sd=1)
+```
+```{r error=T}
+# 2
+y <- simCorn(c(10,0),c(1,2,3),c(0,0,1),c(0,0,1),7524,rnorm,mean=0,sd=1)
+```
+```{r error=T}
+# 3
+y <- simCorn(10,c(1,2,3),c(3,1,0,1),c(0,1,1),75,rnorm,mean=0,sd=1)
+```
+```{r error=T}
+# 4
+y <- simCorn(10,c(1,2,3),c(0,1,0),c(0,0),NULL,rnorm,mean=0,sd=1)
+```
+```{r}
+# Example testing
+# Example 1:
+y <- simCorn()
+y
+```
+```{r}
+# Example 2
+y <- simCorn(overalEffect=10,seed=2123,dist=rgamma,shape=2)
+y
+```
+```{r}
+# Example 3
+mu <- 7
+alpha <- c(1,2,3)
+beta <- c(2,2,1)
+gamma <- c(3,3,2)
+
+y <- simCorn(overalEffect=mu,fertilizerEffect=alpha,rowEffect=beta,
+             colEffect=gamma,seed=29429,rnorm,mean=3,sd=2)
+y
+```
+
+#3a. Use the simCorn function to run simulation.
+
+```{r}
+n = 100 # number of data sets for each simulation
+create_histogram <- function(sim_number,mu=10,alpha=c(0,0,0),
+                   beta=c(0,0,0),gamma=c(0,0,0),seed=NULL,dist=rnorm,...) {
+  
+  if (!is.null(seed)) set.seed(seed)
+  
+  p_values <- numeric(n)
+  
+  for (i in 1:n) {
+    y <- simCorn(overalEffect=mu,fertilizerEffect=alpha,rowEffect=beta,
+                 colEffect=gamma,dist=dist,...)
+    fitCorn <- lm(Yield ~ Fertilizer + Row + Column,data=y)
+    pValue <- anova(fitCorn)$"Pr(>F)"[1]
+    p_values[i] = pValue
+  }
+  
+  pct <- length(p_values[p_values <= 0.05])
+  main_title <- paste("Simulation",sim_number,"(",pct,"% less than 0.05 )")
+  hist(p_values,col='blue',breaks=seq(0,1,0.05),main=main_title)
+  abline(v=0.05,col='red')
+}
+```
+```{r}
+create_histogram(1,mu=10,dist=rnorm,seed=1331,mean=0,sd=1)
+```
+```{r}
+create_histogram(2,10,c(1,2,3),c(0,0,1),c(0,0,1),18694,rnorm,mean=0,sd=1)
+```
+```{r}
+create_histogram(3,10,c(1,2,3),c(1,0,1),c(0,1,1),6516,rnorm,mean=0,sd=1)
+```
+```{r}
+create_histogram(4,10,c(1,2,3),c(0,1,0),c(0,1,0),5,rnorm,mean=0,sd=1)
+```
+```{r}
+create_histogram(5,10,c(1,2,3),c(0,0,1),c(0,0,1),574,rexp,rate=1)
+```
+```{r}
+create_histogram(6,10,c(1,2,3),c(1,0,1),c(0,1,1),9476,rexp,rate=1)
+```
+```{r}
+create_histogram(7,10,c(1,2,3),c(0,1,0),c(0,1,0),9743,rexp,rate=1)
+```
